@@ -1,0 +1,4 @@
+[submodule "vqf"]
+	path = vqf
+	url = https://github.com/kitlith/vqf
+	branch = remove_empty_destructors

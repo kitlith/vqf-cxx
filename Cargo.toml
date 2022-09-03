@@ -1,0 +1,17 @@
+[package]
+name = "vqf-cxx"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+autocxx = "0.22"
+cxx = "1.0"
+nalgebra = "0.30"
+
+[build-dependencies]
+autocxx-build = "0.22"
+miette = { version="4.3", features=["fancy"] } # optional but gives nicer error messages!
+#dunce = "1.0"
+normpath = "0.3"
