@@ -784,7 +784,7 @@ mod ffi {
                     mut other: ::core::pin::Pin<autocxx::moveit::MoveRef<'_, root::VQFCoefficients>>,
                     this: ::core::pin::Pin<&mut ::core::mem::MaybeUninit<root::VQFCoefficients>>,
                 ) {
-                    cxxbridge :: VQFCoefficients_new_synthetic_move_ctor_0xf714713ddf8d40a8_autocxx_wrapper (this . get_unchecked_mut () . as_mut_ptr () , { let r : & mut _ = :: std :: pin :: Pin :: into_inner_unchecked (other . as_mut ()) ; r })
+                    cxxbridge :: VQFCoefficients_new_synthetic_move_ctor_0xf714713ddf8d40a8_autocxx_wrapper (this . get_unchecked_mut () . as_mut_ptr () , { let r : & mut _ = :: core :: pin :: Pin :: into_inner_unchecked (other . as_mut ()) ; r })
                 }
             }
             unsafe impl autocxx::moveit::new::CopyNew for root::VQFCoefficients {

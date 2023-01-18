@@ -8,7 +8,7 @@ edition = "2021"
 [dependencies]
 autocxx = "0.23.1"
 cxx = { version = "1.0.78", default-features = false }
-nalgebra = { version = "0.30", default-features = false }
+nalgebra = { version = "0.31", default-features = false }
 #link-cplusplus = { version = "1.0", features = ["nothing"] }
 
 [build-dependencies]
