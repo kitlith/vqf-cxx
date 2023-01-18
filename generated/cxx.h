@@ -1,24 +1,11 @@
 #pragma once
-#include <algorithm>
-#include <array>
-#include <cassert>
-#include <cstddef>
 #include <cstdint>
-#include <exception>
-#include <initializer_list>
-#include <iosfwd>
-#include <iterator>
 #include <new>
-#include <stdexcept>
-#include <string>
-#include <type_traits>
-#include <utility>
-#include <vector>
-#if defined(_WIN32)
-#include <basetsd.h>
-#else
-#include <sys/types.h>
-#endif
+// #if defined(_WIN32)
+// #include <basetsd.h>
+// #else
+// #include <sys/types.h>
+// #endif
 
 namespace rust {
 inline namespace cxxbridge1 {
