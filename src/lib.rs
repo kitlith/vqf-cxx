@@ -5,7 +5,7 @@ use autocxx::{
     prelude::*,
 };
 
-use nalgebra::{Quaternion, Unit};
+use mint::Quaternion;
 use std::pin::Pin;
 
 include_cpp!(
@@ -186,7 +186,11 @@ impl VQF {
     // TODO: update_batch has so many arguments >_>
 
     /// Returns the angular velocity strapdown integration quaternion
-    pub fn get_quat_3d(&self) -> Unit<Quaternion<vqf_real_t>> {
+    ///
+    /// VQF appaears to normalize this quaternion, so for those of you converting from mint
+    /// to a library that has a distinction between Quaternions and Unit Quaternions, you
+    /// may be able to get away with converting to a Unit Quaternion without checking anything.
+    pub fn get_quat_3d(&self) -> Quaternion<vqf_real_t> {
         let mut wxyz_quat = [0.0; 4];
         unsafe {
             // Safety: The C++ method looks like this: void getQuat3D(vqf_real_t out[4]) const;
@@ -194,17 +198,15 @@ impl VQF {
             self.0.getQuat3D(wxyz_quat.as_mut_ptr());
         }
 
-        // This appears to be normalized within VQF, so I'm not checking it here.
-        Unit::new_unchecked(Quaternion::new(
-            wxyz_quat[0],
-            wxyz_quat[1],
-            wxyz_quat[2],
-            wxyz_quat[3],
-        ))
+        quat_from_wxyz(wxyz_quat)
     }
 
     /// Returns the 6D (magnetometer-free) orientation quaternion
-    pub fn get_quat_6d(&self) -> Unit<Quaternion<vqf_real_t>> {
+    ///
+    /// VQF appaears to normalize this quaternion, so for those of you converting from mint
+    /// to a library that has a distinction between Quaternions and Unit Quaternions, you
+    /// may be able to get away with converting to a Unit Quaternion without checking anything.
+    pub fn get_quat_6d(&self) -> Quaternion<vqf_real_t> {
         let mut wxyz_quat = [0.0; 4];
         unsafe {
             // Safety: The C++ method looks like this: void getQuat6D(vqf_real_t out[4]) const;
@@ -212,17 +214,15 @@ impl VQF {
             self.0.getQuat6D(wxyz_quat.as_mut_ptr());
         }
 
-        // This appears to be normalized within VQF, so I'm not checking it here.
-        Unit::new_unchecked(Quaternion::new(
-            wxyz_quat[0],
-            wxyz_quat[1],
-            wxyz_quat[2],
-            wxyz_quat[3],
-        ))
+        quat_from_wxyz(wxyz_quat)
     }
 
     /// Returns the 9D (with magnetometers) orientation quaternion
-    pub fn get_quat_9d(&self) -> Unit<Quaternion<vqf_real_t>> {
+    ///
+    /// VQF appaears to normalize this quaternion, so for those of you converting from mint
+    /// to a library that has a distinction between Quaternions and Unit Quaternions, you
+    /// may be able to get away with converting to a Unit Quaternion without checking anything.
+    pub fn get_quat_9d(&self) -> Quaternion<vqf_real_t> {
         let mut wxyz_quat = [0.0; 4];
         unsafe {
             // Safety: The C++ method looks like this: void getQuat9D(vqf_real_t out[4]) const;
@@ -230,12 +230,14 @@ impl VQF {
             self.0.getQuat9D(wxyz_quat.as_mut_ptr());
         }
 
-        // This appears to be normalized within VQF, so I'm not checking it here.
-        Unit::new_unchecked(Quaternion::new(
-            wxyz_quat[0],
-            wxyz_quat[1],
-            wxyz_quat[2],
-            wxyz_quat[3],
-        ))
+        quat_from_wxyz(wxyz_quat)
+    }
+}
+
+fn quat_from_wxyz<T>(wxyz: [T; 4]) -> Quaternion<T> {
+    let [w, x, y, z] = wxyz;
+    Quaternion {
+        s: w,
+        v: mint::Vector3 { x, y, z },
     }
 }
